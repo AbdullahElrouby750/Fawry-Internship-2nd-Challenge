@@ -50,10 +50,15 @@ public class Customer {
 
     public double checkPaperBooks(String homeAddress) {
         double totalPrice = 0, totalfees = 0;
-        for (Map.Entry<String, Integer> iterable_element : paperBookCartQty.entrySet()) {
-            PaperBook book = paperBookCart.get(iterable_element);
-            totalPrice += calcCost.calculateEachProductCost(book.getPrice(), iterable_element.getValue());
-            totalfees += calcCost.calculateShippingFees(book.getPrice(), book.getWeight(), iterable_element.getValue());
+        try {
+            
+            for (Map.Entry<String, Integer> iterable_element : paperBookCartQty.entrySet()) {
+                PaperBook book = paperBookCart.get(iterable_element.getKey());
+                totalPrice += calcCost.calculateEachProductCost(book.getPrice(), iterable_element.getValue());
+                totalfees += calcCost.calculateShippingFees(book.getPrice(), book.getWeight(), iterable_element.getValue());
+            }
+        } catch (Exception e) {
+            System.err.println("err:: " + e);
         }
         double totalPaid = totalPrice + totalfees;
         if (totalPaid > balance) {
@@ -63,6 +68,7 @@ public class Customer {
         paperBookCart.clear();
         paperBookCartQty.clear();
         shippingService.afterSalesServce(homeAddress);
+        System.out.println("you paid "+ totalPaid);
         return totalPaid;
     }
 
@@ -92,6 +98,7 @@ public class Customer {
         }
         EbookCart.clear();
         mailService.afterSalesServce(emailAddress);
+        System.out.println("you paid "+ totalPaid);
         return totalPrice + totalfees;
     }
 

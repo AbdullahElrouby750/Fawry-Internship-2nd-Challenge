@@ -24,14 +24,14 @@ public class App {
         EBook eBook3 = new EBook("eb3", "eb3", 1970, 250, "link3", false, ".pdf");
 
         //adding paper books
-        inventory.addPaperBook(paperBook1.getISBN(), paperBook3);
+        inventory.addPaperBook(paperBook1.getISBN(), paperBook1);
         inventory.addPaperBooks(paperBook2.getISBN(),paperBook2, 20);
-        inventory.addPaperBooks(paperBook1.getISBN(), paperBook1, 5);
+        inventory.addPaperBooks(paperBook3.getISBN(), paperBook3, 5);
 
         //adding Ebooks
-        inventory.addEBook(eBook3.getISBN(), eBook3);
-        inventory.addEBook(eBook2.getISBN(), eBook2);
         inventory.addEBook(eBook1.getISBN(), eBook1);
+        inventory.addEBook(eBook2.getISBN(), eBook2);
+        inventory.addEBook(eBook3.getISBN(), eBook3);
 
         //!Remove and return outdated books that passed specific number of years
         PaperBook paperBook4 = new PaperBook("pb4", "pb4", 1005, 1200, 950, true);
@@ -44,8 +44,8 @@ public class App {
         int qty = input.getIntgerinput("enter the wanted quantity");
         PaperBook paperBook = inventory.getPaperBooks(inputISNB, qty);
         if(paperBook != null){
-            customer.buyPaperBooks(paperBook.getISBN(), qty, inventory);
-            System.out.printf("you paid %d", customer.checkPaperBooks("London, 22 baker street"));
+            customer.buyPaperBooks(inputISNB, qty, inventory);
+            customer.checkPaperBooks("London, 22 baker street");
         }
 
         
@@ -54,7 +54,7 @@ public class App {
         EBook eBook = inventory.gettingEbook(inputISNB);
         if(eBook != null){
             customer.buyEBooks(inputISNB, inventory);
-            System.out.printf("you paid %d",customer.checkoutEbook("customer@customer.com"));
+            customer.checkoutEbook("customer@customer.com");
         }
 
     }
